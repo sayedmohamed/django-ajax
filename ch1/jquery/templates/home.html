@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<script type="text/javascript">
+	$(function() {
+		$("#data-button-1").click(showParams1);
+	});
+	function showParams1() {
+		$.ajax({ url: "show-params",
+		data: "param1=foo&param2=bar",
+		success: showAlert });
+	}
+
+	function showAlert(text) {
+		alert(text);
+	} 
+</script>
+{% endblock %}
+
+{% block content %}
+	<fieldset>
+	<legend>$.ajax: The 'data' Option(Fixed String)</legend>
+	<input type="button" value="Show Params" id="data-button-1" />
+	</fieldset>
+{% endblock %}

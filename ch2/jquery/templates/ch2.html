@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<!-- 
+Common options: example
+=======================
+$.ajax({
+	url: "address",
+	success: successHandlerFunction,
+	data: { param1: "foo bar", param2: "baz"}, 
+		#data: $("#data-form").serialize(),
+		#data: "param1=foo&param2=bar",			
+		#data: params,
+			#var params ={ param1: $("#field1").val(),
+			#param2: $("#field2").val() };
+	error: errorHandlerFunction,
+	cache: false,
+	dataType: "json",
+		#dataType: html , xml, or json
+	username: "resig",
+	password: "scriptaculous-fan" 
+});
+-->
+<script type="text/javascript">
+	$(function() {
+		$("#nums-button").click(showNums);
+	});
+
+	function showNums() {
+		$.ajax({ 
+			url: "/nums/",
+			dataType: "json", 
+			
+			success: showNumberList 
+		});
+	}
+
+	function showNumberList(jsonData) {
+		var list = makeList(jsonData.fg, jsonData.bg,
+			jsonData.fontSize, jsonData.numbers);
+		$("#nums-result").html(list);
+	}	
+
+	function makeList(fg, bg, fontSize, nm) {
+		return(
+			"<div style='color:" + fg + "; " +
+			"background-color:" + bg + "; " +
+			"font-size:" + fontSize + "px'>\n" +
+			+nm[1]+"</div>");
+	}
+</script>
+{% endblock %}
+
+{% block content %}
+	<fieldset>
+	<legend>$.ajax: Treating Response as JSON</legend>
+	<input type="button" value="Show Nums" id='nums-button' />
+	<div id="nums-result"></div>
+	</fieldset>
+{% endblock %}
